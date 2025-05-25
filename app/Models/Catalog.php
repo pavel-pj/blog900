@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Models;
+
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use App\Models\Articles;
@@ -12,7 +13,7 @@ class Catalog extends Model
     /** @use HasFactory<\Database\Factories\CatalogFactory> */
     use HasFactory;
 
-    protected $fillable =[
+    protected $fillable = [
         'name',
         'parent_id'
     ];

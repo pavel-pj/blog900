@@ -16,7 +16,7 @@ class AuthController extends Controller
     public function register(UserCreateRequest $request)
     {
 
-       $validated = $request->validated();
+        $validated = $request->validated();
 
      /*
         $validator = Validator::make($request->all(), [
@@ -31,7 +31,7 @@ class AuthController extends Controller
          $user = User::create([
             'email' => $validated['email'],
             'password' => Hash::make($validated['password']),
-        ]);
+         ]);
 
           $token = $user->createToken('MyAppToken')->plainTextToken;
 

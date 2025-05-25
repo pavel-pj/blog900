@@ -12,11 +12,13 @@ class CatalogController extends Controller
 {
     protected CatalogService $service;
 
-    public function __construct(){
+    public function __construct()
+    {
         $this->service = new CatalogService();
     }
 
-    public function test(){
+    public function test()
+    {
         return "IIIIII";
     }
 
@@ -39,16 +41,15 @@ class CatalogController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(CatalogCreateRequest $request) : JsonResponse
+    public function store(CatalogCreateRequest $request): JsonResponse
     {
 
         $validated = $request->validated();
         try {
             return response()->json($this->service->store($validated), 201);
-         } catch (\Exception $e) {
-             return response()->error($e->getMessage(), 500);
-         }
-
+        } catch (\Exception $e) {
+            return response()->error($e->getMessage(), 500);
+        }
     }
 
     /**

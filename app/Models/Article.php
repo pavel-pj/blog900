@@ -21,7 +21,8 @@ class Article extends Model
         'title'
     ];
 
-    public function catalog(): BelongsTo {
+    public function catalog(): BelongsTo
+    {
         return $this->belongsTo(Catalog::class);
     }
 }

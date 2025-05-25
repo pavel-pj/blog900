@@ -16,7 +16,7 @@ class CatalogCreateRequest extends FormRequest
     public function authorize(): bool
     {
        // return Auth::check();
-       return true;
+        return true;
     }
 
     protected function failedValidation(Validator $validator)
@@ -36,8 +36,8 @@ class CatalogCreateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' =>'string|required| unique:catalogs,name',
-            'parent_id' =>'string|nullable|exists:catalogs,id'
+            'name' => 'string|required| unique:catalogs,name',
+            'parent_id' => 'string|nullable|exists:catalogs,id'
         ];
     }
 }
