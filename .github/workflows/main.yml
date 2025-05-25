@@ -1,28 +1,24 @@
 name: linter
 
-on:
-  push:
-    branches: [ master ]
-
+on: [push]
 jobs:
-  laravel-lint:
-    name: Lint PHP code
+  check-bats-version:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
+        # Check-out repository under GitHub workspace
+        # https://github.com/actions/checkout
+      - uses: actions/checkout@v2
+        # Step's name
       - name: Setup PHP
+        # Action gives to setup the PHP environment to test application
+        # https://github.com/shivammathur/setup-php
         uses: shivammathur/setup-php@v2
         with:
+          # Specify the PHP version
           php-version: '8.2'
-          extensions: mbstring, xml, ctype, json, tokenizer
-          coverage: none
-
-      - name: Install dependencies
-        run: |
-          composer install --prefer-dist --no-progress --no-scripts --quiet
-
-      - name: Run PHP Code Sniffer
-        run: composer lint
+      - name: Install
+        # Install project
+        run: make install
+      - name: Run linter
+        # Run Linter
+        run: make lint
