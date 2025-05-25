@@ -21,9 +21,12 @@ class UserCreateRequest extends FormRequest
     protected function failedValidation(Validator $validator)
     {
         throw new HttpResponseException(
-            response()->json([
+            response()->json(
+                [
                 'errors' => $validator->errors(),
-            ], JsonResponse::HTTP_UNPROCESSABLE_ENTITY)
+                ],
+                JsonResponse::HTTP_UNPROCESSABLE_ENTITY
+            )
         );
     }
 

@@ -10,7 +10,9 @@ use App\Models\Catalog;
 
 class Article extends Model
 {
-    /** @use HasFactory<\Database\Factories\ArticleFactory> */
+    /**
+ * @use HasFactory<\Database\Factories\ArticleFactory>
+*/
     use HasFactory;
 
     protected $fillable = [

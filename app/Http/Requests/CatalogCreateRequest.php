@@ -15,16 +15,19 @@ class CatalogCreateRequest extends FormRequest
      */
     public function authorize(): bool
     {
-       // return Auth::check();
+        // return Auth::check();
         return true;
     }
 
     protected function failedValidation(Validator $validator)
     {
         throw new HttpResponseException(
-            response()->json([
+            response()->json(
+                [
                 'errors' => $validator->errors(),
-            ], JsonResponse::HTTP_UNPROCESSABLE_ENTITY)
+                ],
+                JsonResponse::HTTP_UNPROCESSABLE_ENTITY
+            )
         );
     }
 

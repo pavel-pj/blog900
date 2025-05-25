@@ -18,7 +18,7 @@ class AuthController extends Controller
 
         $validated = $request->validated();
 
-     /*
+        /*
         $validator = Validator::make($request->all(), [
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:6|confirmed',
@@ -27,20 +27,24 @@ class AuthController extends Controller
         if ($validator->fails()) {
             return response()->json(['error' => $validator->errors()], 401);
         }
-    */
-         $user = User::create([
+        */
+        $user = User::create(
+            [
             'email' => $validated['email'],
             'password' => Hash::make($validated['password']),
-         ]);
+             ]
+        );
 
           $token = $user->createToken('MyAppToken')->plainTextToken;
 
-        return response()->json([
+        return response()->json(
+            [
             'success' => true,
             'message' => 'User registered successfully.',
             'token' => $token,
             'user' => $user,
-        ]);
+            ]
+        );
     }
 
     // User Login API
@@ -53,38 +57,46 @@ class AuthController extends Controller
         $user = Auth::user();
         $token = $user->createToken('MyAppToken')->plainTextToken;
 
-        return response()->json([
+        return response()->json(
+            [
             'success' => true,
             'message' => 'Login successful.',
             'token' => $token,
             'user' => $user,
-        ]);
+            ]
+        );
     }
 
     // User Profile API (Protected)
     public function profile(Request $request)
     {
-        return response()->json([
+        return response()->json(
+            [
             'success' => true,
             'user' => $request->user(),
-        ]);
+            ]
+        );
     }
 
     public function abba(Request $request)
     {
-        return response()->json([
+        return response()->json(
+            [
             'success' => true,
             'user' => $request->user(),
-        ]);
+            ]
+        );
     }
 
     public function logout(Request $request)
     {
         $request->user()->tokens()->delete();
 
-        return response()->json([
+        return response()->json(
+            [
             'success' => true,
             'message' => 'Logout successful.',
-        ]);
+            ]
+        );
     }
 }

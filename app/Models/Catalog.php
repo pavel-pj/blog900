@@ -10,14 +10,16 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Catalog extends Model
 {
-    /** @use HasFactory<\Database\Factories\CatalogFactory> */
+    /**
+ * @use HasFactory<\Database\Factories\CatalogFactory>
+*/
     use HasFactory;
 
     protected $fillable = [
         'name',
         'parent_id'
     ];
-/*
+    /*
     public function parent():BelongsTo {
         return $this->belongsTo(Catalog::class,'parent_id');
     }
