@@ -2,13 +2,13 @@ name: linter
 
 on:
   push:
-    branches: [ main ]
- 
+    branches: [ master ]
+
 jobs:
   laravel-lint:
     name: Lint PHP code
     runs-on: ubuntu-latest
-    
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
