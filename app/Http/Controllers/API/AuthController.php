@@ -27,15 +27,16 @@ class AuthController extends Controller
         if ($validator->fails()) {
             return response()->json(['error' => $validator->errors()], 401);
         }
+
         */
-        $user = User::create(
-            [
+
+        $user = User::create([
+
             'email' => $validated['email'],
             'password' => Hash::make($validated['password']),
-             ]
-        );
+             ]);
 
-          $token = $user->createToken('MyAppToken')->plainTextToken;
+        $token = $user->createToken('MyAppToken')->plainTextToken;
 
         return response()->json(
             [

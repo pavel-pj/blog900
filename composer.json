@@ -56,7 +56,9 @@
         "lint": [
             "phpcs --cache=clear --standard=PSR12 --report=full --colors app/"
            ],
-        "fix": [
+        "lint:strict2": "phpcs --standard=phpcs.xml -p --colors --runtime-set ignore_errors_on_exit 1 --runtime-set ignore_warnings_on_exit 1",
+        "lint:strict": "phpcs --standard=phpcs.xml -p --colors  ",
+        "lint:fix": [
             "phpcbf app/"
         ]
     },
