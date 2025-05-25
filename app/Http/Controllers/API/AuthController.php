@@ -7,15 +7,19 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use App\Http\Requests\UserCreateRequest;
 use Validator;
 
 class AuthController extends Controller
 {
     // User Registration API
-    public function register(Request $request)
+    public function register(UserCreateRequest $request)
     {
-         $validator = Validator::make($request->all(), [
-            'name' => 'required|string|max:255',
+
+       $validated = $request->validated();
+
+     /*
+        $validator = Validator::make($request->all(), [
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:6|confirmed',
         ]);
@@ -23,11 +27,10 @@ class AuthController extends Controller
         if ($validator->fails()) {
             return response()->json(['error' => $validator->errors()], 401);
         }
-
+    */
          $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
+            'email' => $validated['email'],
+            'password' => Hash::make($validated['password']),
         ]);
 
           $token = $user->createToken('MyAppToken')->plainTextToken;
@@ -60,6 +63,14 @@ class AuthController extends Controller
 
     // User Profile API (Protected)
     public function profile(Request $request)
+    {
+        return response()->json([
+            'success' => true,
+            'user' => $request->user(),
+        ]);
+    }
+
+    public function abba(Request $request)
     {
         return response()->json([
             'success' => true,

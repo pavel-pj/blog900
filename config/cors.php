@@ -15,6 +15,7 @@ return [
     |
     */
 
+        /*
         'paths' => ['api/*', 'sanctum/csrf-cookie', 'login', 'logout'],
 
         'allowed_methods' => ['GET', 'POST', 'OPTIONS'],
@@ -30,6 +31,22 @@ return [
         'max_age' => 0,
 
         'supports_credentials' => true, // если используете куки/сессии
+        */
 
+    'paths' => ['api/*', 'sanctum/csrf-cookie', 'login', 'logout'],
+
+    'allowed_methods' => ['*'],
+
+    'allowed_origins' => ['*'], // укажите именно этот источник
+
+    'allowed_origins_patterns' => [],
+
+    'allowed_headers' => ['*'],
+
+    'exposed_headers' => [],
+
+    'max_age' => 0,
+
+    'supports_credentials' => true, // если используете куки/сессии
 ];
 
