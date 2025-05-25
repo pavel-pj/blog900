@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Services\CatalogService;
 use App\Http\Requests\CatalogCreateRequest;
+use App\Http\Requests\CatalogUpdateRequest;
 use Illuminate\Http\JsonResponse;
 
 class CatalogController extends Controller
@@ -17,17 +18,18 @@ class CatalogController extends Controller
         $this->service = new CatalogService();
     }
 
-    public function test()
-    {
-        return "IIIIII";
-    }
-
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(): JsonResponse
     {
-        //
+        try {
+            return response()->json($this->service->index(), 201);
+        }
+        catch (\Exception $e) {
+            return response()->error($e->getMessage(), 500);
+       }
+
     }
 
     /**
@@ -46,7 +48,7 @@ class CatalogController extends Controller
 
         $validated = $request->validated();
         try {
-            return response()->json($this->service->store($validated), 201);
+            return response()->json($this->service->store($validated), 200);
         } catch (\Exception $e) {
             return response()->error($e->getMessage(), 500);
         }
@@ -57,7 +59,13 @@ class CatalogController extends Controller
      */
     public function show(string $id)
     {
-        //
+        try {
+            return response()->json($this->service->show($id), 200);
+        }
+        catch (\Exception $e) {
+            return response()->error($e->getMessage(), 500);
+        }
+
     }
 
     /**
@@ -71,9 +79,15 @@ class CatalogController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(CatalogUpdateRequest $request, string $id)
     {
-        //
+        $validated = $request->validated();
+        try {
+            return response()->json($this->service->update($validated, $id), 200);
+        }
+        catch (\Exception $e) {
+            return response()->json($e->getMessage(), 500);
+        }
     }
 
     /**
@@ -81,6 +95,12 @@ class CatalogController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        try {
+            $this->service->destroy($id);
+            return response()->json("Item was deleted successfully", 200);
+        }
+        catch (\Exception $e) {
+            return response()->json($e->getMessage(), 500);
+        }
     }
 }

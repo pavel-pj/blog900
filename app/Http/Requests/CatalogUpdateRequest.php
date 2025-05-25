@@ -7,8 +7,9 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Http\JsonResponse;
-
-class CatalogCreateRequest extends FormRequest
+use Illuminate\Validation\Rule;
+use App\Models\Catalog;
+class CatalogUpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -16,14 +17,14 @@ class CatalogCreateRequest extends FormRequest
     public function authorize(): bool
     {
         return Auth::check();
-     }
+    }
 
     protected function failedValidation(Validator $validator)
     {
         throw new HttpResponseException(
             response()->json(
                 [
-                'errors' => $validator->errors(),
+                    'errors' => $validator->errors(),
                 ],
                 JsonResponse::HTTP_UNPROCESSABLE_ENTITY
             )
@@ -37,8 +38,21 @@ class CatalogCreateRequest extends FormRequest
      */
     public function rules(): array
     {
+
+        $catalogId = $this->route('catalog') ?? $this->route('id');
+        $catalog = Catalog::find($catalogId);
+
         return [
-            'name' => 'string|required| unique:catalogs,name',
+            'name' => [
+                'string',
+                'nullable',
+                Rule::unique('catalogs', 'name')
+                    ->ignore($catalogId)
+                    ->when($catalog && $this->input('name') === $catalog->name,
+                        function ($rule) {
+                            return $rule->where('id', $this->route('catalog') ?? $this->route('id'));
+                        })
+            ],
             'parent_id' => 'string|nullable|exists:catalogs,id'
         ];
     }
