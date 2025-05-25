@@ -12,14 +12,16 @@ class CatalogService
 
     public function __construct()
     {
-        $this->repository = new CatalogRepository ();
+        $this->repository = new CatalogRepository();
     }
 
-    public function index() {
+    public function index()
+    {
         return $this->repository->index();
     }
 
-    public function show (string $id){
+    public function show(string $id)
+    {
         return $this->repository->show($id);
     }
 
@@ -38,7 +40,7 @@ class CatalogService
         try {
             $item = Catalog::findOrFail($id);
         } catch (ModelNotFoundException $e) {
-            throw new \Exception("non-existent instance" );
+            throw new \Exception("non-existent instance");
         }
 
         try {
@@ -51,30 +53,25 @@ class CatalogService
                 );
 
             DB::commit();
-            return Catalog::where('id',$id)->get() ;
-
+            return Catalog::where('id', $id)->get() ;
         } catch (Exception $e) {
             DB::rollBack();
             return $e;
         }
     }
 
-    public function destroy( string $id): void
+    public function destroy(string $id): void
     {
 
         try {
             $item = Catalog::findOrFail($id);
         } catch (ModelNotFoundException $e) {
-            throw new \Exception("non-existent instance" );
+            throw new \Exception("non-existent instance");
         }
 
         $result = Catalog::destroy($id);
-        if (!$result){
-            throw new \Exception("Item could not be deleted" );
+        if (!$result) {
+            throw new \Exception("Item could not be deleted");
         }
-
-
     }
-
-
 }

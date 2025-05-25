@@ -9,6 +9,7 @@ use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Validation\Rule;
 use App\Models\Catalog;
+
 class CatalogUpdateRequest extends FormRequest
 {
     /**
@@ -48,10 +49,12 @@ class CatalogUpdateRequest extends FormRequest
                 'nullable',
                 Rule::unique('catalogs', 'name')
                     ->ignore($catalogId)
-                    ->when($catalog && $this->input('name') === $catalog->name,
+                    ->when(
+                        $catalog && $this->input('name') === $catalog->name,
                         function ($rule) {
                             return $rule->where('id', $this->route('catalog') ?? $this->route('id'));
-                        })
+                        }
+                    )
             ],
             'parent_id' => 'string|nullable|exists:catalogs,id'
         ];

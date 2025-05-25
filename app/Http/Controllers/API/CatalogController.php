@@ -25,11 +25,9 @@ class CatalogController extends Controller
     {
         try {
             return response()->json($this->service->index(), 201);
-        }
-        catch (\Exception $e) {
+        } catch (\Exception $e) {
             return response()->error($e->getMessage(), 500);
-       }
-
+        }
     }
 
     /**
@@ -61,11 +59,9 @@ class CatalogController extends Controller
     {
         try {
             return response()->json($this->service->show($id), 200);
-        }
-        catch (\Exception $e) {
+        } catch (\Exception $e) {
             return response()->error($e->getMessage(), 500);
         }
-
     }
 
     /**
@@ -84,8 +80,7 @@ class CatalogController extends Controller
         $validated = $request->validated();
         try {
             return response()->json($this->service->update($validated, $id), 200);
-        }
-        catch (\Exception $e) {
+        } catch (\Exception $e) {
             return response()->json($e->getMessage(), 500);
         }
     }
@@ -98,8 +93,7 @@ class CatalogController extends Controller
         try {
             $this->service->destroy($id);
             return response()->json("Item was deleted successfully", 200);
-        }
-        catch (\Exception $e) {
+        } catch (\Exception $e) {
             return response()->json($e->getMessage(), 500);
         }
     }

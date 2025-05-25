@@ -16,7 +16,7 @@ class CatalogCreateRequest extends FormRequest
     public function authorize(): bool
     {
         return Auth::check();
-     }
+    }
 
     protected function failedValidation(Validator $validator)
     {
