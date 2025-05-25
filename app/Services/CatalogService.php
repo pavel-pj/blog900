@@ -8,7 +8,7 @@ class CatalogService
 {
     public function store($validated)
     {
-                 $item = Catalog::create($validated);
+        $item = Catalog::create($validated);
         if (!$item) {
             throw new \Error("It is not possible to create new item Catalog");
         }

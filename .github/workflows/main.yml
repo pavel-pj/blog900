@@ -21,4 +21,4 @@ jobs:
           composer dump-autoload
 
       - name: Run PHPCS
-        run: composer lint
+        run: composer run lint:strict
