@@ -2,26 +2,26 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Services\CatalogService;
-use App\Http\Requests\CatalogCreateRequest;
-use App\Http\Requests\CatalogUpdateRequest;
+use App\Http\Controllers\Controller;
+use App\Services\ArticleService;
+use App\Http\Requests\ArticleCreateRequest;
+use App\Http\Requests\ArticleUpdateRequest;
 use Illuminate\Http\JsonResponse;
 
-class CatalogController extends Controller
+class ArticleController extends Controller
 {
-    protected CatalogService $service;
+    public ArticleService $service;
 
     public function __construct()
     {
-        $this->service = new CatalogService();
+        $this->service = new ArticleService();
     }
 
     /**
      * Display a listing of the resource.
      */
-    public function index(): JsonResponse
+    public function index()
     {
         try {
             return response()->json($this->service->index(), 201);
@@ -35,16 +35,16 @@ class CatalogController extends Controller
      */
     public function create()
     {
-        //
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(CatalogCreateRequest $request): JsonResponse
+    public function store(ArticleCreateRequest $request): JsonResponse
     {
 
         $validated = $request->validated();
+
         try {
             return response()->json($this->service->store($validated), 201);
         } catch (\Exception $e) {
@@ -75,8 +75,9 @@ class CatalogController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(CatalogUpdateRequest $request, string $id)
+    public function update(ArticleUpdateRequest $request, string $id)
     {
+
         $validated = $request->validated();
         try {
             return response()->json($this->service->update($validated, $id), 200);
@@ -90,6 +91,7 @@ class CatalogController extends Controller
      */
     public function destroy(string $id)
     {
+
         try {
             $this->service->destroy($id);
             return response()->json("Item was deleted successfully", 200);

@@ -2,18 +2,17 @@
 
 namespace App\Services;
 
-use App\Models\Catalog;
-use App\Repositories\CatalogRepository;
-use Exception;
+use App\Models\Article;
+use App\Repositories\ArticleRepository;
 use Illuminate\Support\Facades\DB;
 
-class CatalogService
+class ArticleService
 {
-    protected CatalogRepository $repository;
+    protected ArticleRepository $repository;
 
     public function __construct()
     {
-        $this->repository = new CatalogRepository();
+        $this->repository = new ArticleRepository();
     }
 
     public function index()
@@ -28,9 +27,11 @@ class CatalogService
 
     public function store(array $validated)
     {
-        $item =  Catalog::create($validated);
+
+
+        $item =  Article::create($validated);
         if (!$item) {
-            throw new \Error("It is not possible to create new item Catalog");
+            throw new \Exception("It is not possible to create new item Article");
         }
         return $item;
     }
@@ -39,23 +40,24 @@ class CatalogService
     {
 
         try {
-            $item = Catalog::findOrFail($id);
+            $item = Article::findOrFail($id);
         } catch (ModelNotFoundException $e) {
             throw new \Exception("non-existent instance");
         }
 
+
         try {
             DB::beginTransaction();
 
-            DB::table('catalogs')
+            DB::table('articles')
                 ->updateOrInsert(
                     ['id' => $id],
                     $validated
                 );
 
             DB::commit();
-            return Catalog::where('id', $id)->get() ;
-        } catch (Exception $e) {
+            return Article::where('id', $id)->get() ;
+        } catch (\Exception $e) {
             DB::rollBack();
             return $e;
         }
@@ -65,12 +67,12 @@ class CatalogService
     {
 
         try {
-            $item = Catalog::findOrFail($id);
+            $item = Article::findOrFail($id);
         } catch (ModelNotFoundException $e) {
             throw new \Exception("non-existent instance");
         }
 
-        $result = Catalog::destroy($id);
+        $result = Article::destroy($id);
         if (!$result) {
             throw new \Exception("Item could not be deleted");
         }

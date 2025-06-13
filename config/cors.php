@@ -35,18 +35,18 @@ return [
 
     'paths' => ['api/*', 'sanctum/csrf-cookie', 'login', 'logout'],
 
-    'allowed_methods' => ['*'],
+    'allowed_methods' => explode(',', env('CORS_ALLOWED_METHODS', '*')),
 
-    'allowed_origins' => ['*'], // укажите именно этот источник
+    'allowed_origins' => explode(',', env('CORS_ALLOWED_ORIGINS', '*')),
 
     'allowed_origins_patterns' => [],
 
-    'allowed_headers' => ['*'],
+    'allowed_headers' => explode(',', env('CORS_ALLOWED_HEADERS', '*')),
 
-    'exposed_headers' => [],
+    'exposed_headers' => explode(',', env('CORS_EXPOSED_HEADERS', '')),
 
-    'max_age' => 0,
+    'max_age' => (int) env('CORS_MAX_AGE', 0),
 
-    'supports_credentials' => true, // если используете куки/сессии
+    'supports_credentials' => true,
 ];
 

@@ -2,23 +2,24 @@
 
 namespace App\Repositories;
 
-use App\Models\Catalog;
+use App\Models\Article;
 
-class CatalogRepository
+class ArticleRepository
 {
     public function index()
     {
-        return Catalog::orderBy('created_at', 'DESC')->get();
+        return Article::orderBy('created_at', 'DESC')->get();
     }
+
 
     public function show(int $id)
     {
 
-        $item = Catalog::where('id', $id)->exists();
+        $item = Article::where('id', $id)->exists();
         if (!$item) {
             throw new \Exception("non-existent instance");
         }
 
-        return Catalog::where('id', $id)->get();
+        return Article::where('id', $id)->get();
     }
 }
