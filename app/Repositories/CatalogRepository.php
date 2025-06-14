@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Models\Catalog;
+use Illuminate\Support\Facades\DB;
 
 class CatalogRepository
 {
@@ -20,5 +21,15 @@ class CatalogRepository
         }
 
         return Catalog::where('id', $id)->get();
+    }
+
+    public function getCatalogDictionary()
+    {
+
+        $query = DB::table('catalogs')
+            ->select("id as code", "name")
+            ->orderBy('name')->get();
+
+        return $query;
     }
 }

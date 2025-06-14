@@ -7,8 +7,10 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Validation\Rule;
+use App\Models\Catalog;
 
-class ArticleCreateRequest extends FormRequest
+class DictionaryRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,7 +25,7 @@ class ArticleCreateRequest extends FormRequest
         throw new HttpResponseException(
             response()->json(
                 [
-                'errors' => $validator->errors(),
+                    'errors' => $validator->errors(),
                 ],
                 JsonResponse::HTTP_UNPROCESSABLE_ENTITY
             )
@@ -38,11 +40,7 @@ class ArticleCreateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'string|required|max:255',
-            'title' => 'string|required|max:255',
-            'slug' => 'string|required|max:255|unique:articles,slug',
-            'html_content' => 'string|nullable',
-            'catalog_id' => 'required|numeric| exists:catalogs,id',
+            'typeDictionary' => 'required',
         ];
     }
 }
